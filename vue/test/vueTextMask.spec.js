@@ -232,6 +232,19 @@ describe('inputMask', () => {
     expect(vm.emitEvent.getCall(0).args[0].type).to.equal('focus')
     expect(vm.emitEvent.getCall(1).args[0].type).to.equal('blur')
   })
+
+  it('doesnt emit input event when bind is called with the same value', () => {
+    const vm = mountComponent(maskedInput, {
+      value: '123',
+      mask: ['(', /[1-9]/, /\d/, /\d/, ')', ' ', /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/]
+    })
+
+    vm.$emit = sinon.spy()
+    vm.updateValue('123')
+    expect(vm.$emit.callCount).to.equal(0)
+    vm.updateValue('1234')
+    expect(vm.$emit.callCount).to.equal(1)
+  })
 })
 
 describe('conformToMask', () => {

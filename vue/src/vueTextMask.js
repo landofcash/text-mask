@@ -72,8 +72,11 @@ export default {
     },
 
     updateValue(value) {
+      let oldValue = this.$refs.input.value
       this.textMaskInputElement.update(value)
-      this.$emit('input', this.$refs.input.value)
+      if(this.$refs.input.value !== oldValue) {
+        this.$emit('input', this.$refs.input.value)
+      }
     },
 
     emitEvent(event) {
