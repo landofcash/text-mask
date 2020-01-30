@@ -58,6 +58,9 @@ export default {
 
   mounted() {
     this.initMask()
+    if(this.$refs.input.value !== this.value) {
+      this.$emit('input', this.$refs.input.value)
+    }
   },
 
   methods: {
